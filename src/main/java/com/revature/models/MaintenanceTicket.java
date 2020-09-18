@@ -161,7 +161,7 @@ public class MaintenanceTicket implements Serializable {
 	@Override
 	public String toString() {
 		return "MaintenanceTicket [ticketId=" + ticketId + ", description=" + description + ", submitted=" + submitted
-				+ ", resolved=" + resolved + ", statusId=" + statusId + "]";
+				+ ", resolved=" + resolved + ", statusId=" + statusId.getStatusId() + "]";
 	}
 	
 	

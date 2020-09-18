@@ -7,8 +7,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.revature.daos.ITicketDAO;
-import com.revature.daos.IUserDAO;
+import com.revature.repositories.ITicketDAO;
+import com.revature.repositories.IUserDAO;
 import com.revature.models.MaintenanceTicket;
 
 @Service
@@ -29,12 +29,12 @@ public class TicketServices {
 	
 	public MaintenanceTicket findByStatusId(int sid) {
 		log.info("Finding Maintenance Ticket by Status ID");
-		return (MaintenanceTicket) tdao.findByStatus(sid);
+		return (MaintenanceTicket) tdao.findByStatusId(sid);
 	}
 	
-	public List<MaintenanceTicket> addTicket(MaintenanceTicket t) {
+	public MaintenanceTicket addTicket(MaintenanceTicket t) {
 		log.info("Adding Maintenance Ticket");
-		tdao.addTicket(t);
-		return tdao.findAll();
+		return tdao.save(t);
 	}
 }
+

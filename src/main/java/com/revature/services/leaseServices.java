@@ -5,42 +5,43 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.revature.daos.BlankLeaseDAO;
-import com.revature.daos.LeaseDAO;
-import com.revature.models.BlankLease;
+
+import com.revature.repositories.ILeaseDAO;
+
 import com.revature.models.Lease;
-import com.revature.models.User;
 
 @Service
-public class leaseServices {
+public class LeaseServices {
 	
-	private LeaseDAO lDAO;
-	private BlankLeaseDAO bDAO;
+	private ILeaseDAO lDAO;
+	
 	@Autowired
-	public leaseServices() {
+	public LeaseServices(ILeaseDAO lDAO) {
+		super();
+		this.lDAO = lDAO;
 	}
 
 
 
 	public Lease findLeaseByTenant(int id) {
-		return lDAO.findLeaseByTenant(id);
+		return lDAO.findByUser(id);
 	}
 
-	public List<Lease> findAllLease() {
-		return lDAO.findAllLease();
-	}
-
-
-
-	public Lease updateLease(int id) {
-	 return lDAO.updateLease(id);
+	public List<Lease> findAll() {
+		return lDAO.findAll();
 	}
 
 
 
+	public Lease updateLease(Lease l) {
+	 return lDAO.save(l);
+	}
 
-	public BlankLease findBlankLease() {
-		return bDAO.findBlankLease();
+
+
+
+	public Lease getBlankLease(int id) {
+		return lDAO.BlankLeaseName(id);
 	}
 
 

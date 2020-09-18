@@ -20,7 +20,10 @@ import com.revature.models.LoginDTO;
 import com.revature.models.Role;
 import com.revature.models.User;
 import com.revature.models.UserDTO;
+import com.revature.repositories.IUserDAO;
 import com.revature.services.UserServices;
+
+
 
 @RestController
 //Adding the URI mapping for what requests this controller will handle
@@ -39,16 +42,16 @@ public class UserController {
 		this.uServices = uServices;
 	}
 
-	@PostMapping("/login")
-	public @ResponseBody User login(@RequestBody LoginDTO loginDTO) {
-		return uServices.login(loginDTO.username, loginDTO.password);
-
-	}
-	@PostMapping("/register")
-	public @ResponseBody User register(@RequestBody UserDTO loginDTO) {
-		return uServices.register(loginDTO);
-
-	}
+//	@PostMapping("/login")
+//	public @ResponseBody User login(@RequestBody LoginDTO loginDTO) {
+//		return uServices.login(loginDTO.username, loginDTO.password);
+//
+//	}
+//	@PostMapping("/register")
+//	public @ResponseBody User register(@RequestBody UserDTO loginDTO) {
+//		return uServices.register(loginDTO);
+//
+//	}
 	
 	//indicates that a get method to the base URI of the controller (/avenger) will call this method.
 		@RequestMapping(method=RequestMethod.GET)

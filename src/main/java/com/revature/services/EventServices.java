@@ -8,8 +8,8 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.revature.daos.IEventDAO;
 import com.revature.models.Event;
+import com.revature.repositories.IEventDAO;
 
 @Service
 public class EventServices {
@@ -28,23 +28,27 @@ public class EventServices {
 	}
 	
 	public Event findByDate(Date date) {
-		return edao.findByDate(date);
+		return edao.findByEventDate(date);
 	}
 	
 	public List<Event> findByUser(int userId) {
-		return edao.findByUser(userId);
+		return edao.findByEventCreator(userId);
 	}
 	
-	public List<Event> findUpcoming(Date date) {
-		return edao.findUpcoming(date);
-	}
-	
-	public List<Event> findPast(Date date) {
-		return edao.findPast(date);
-	}
+//	public List<Event> findUpcoming(Date date) {
+//		return edao.findUpcoming(date);
+//	}
+//	
+//	public List<Event> findPast(Date date) {
+//		return edao.findPast(date);
+//	}
 	
 	public List<Event> addEvent(Event ev) {
-		edao.addEvent(ev);
+		edao.save(ev);
 		return edao.findAll();
+	}
+
+	public Event updateEvent(Event ev) {
+		return edao.save(ev);
 	}
 }

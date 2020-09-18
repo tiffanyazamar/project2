@@ -32,6 +32,8 @@ public class Lease implements Serializable {
 	private int leaseID;
 	@Column(name="lease")
 	private Blob leaseName;
+	@Column(name="blank_lease")
+	private Blob blankLeaseName;
 	@Column(name="start_date")
 	private Timestamp startDate;
 	@Column(name="end_date")

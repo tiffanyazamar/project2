@@ -15,12 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.revature.models.BlankLease;
 import com.revature.models.Lease;
 import com.revature.models.Role;
 import com.revature.models.User;
-import com.revature.services.UserServices;
-import com.revature.services.leaseServices;
+import com.revature.repositories.ILeaseDAO;
+import com.revature.services.LeaseServices;
 
 @RestController
 @RequestMapping(value="/lease")
@@ -28,10 +27,11 @@ import com.revature.services.leaseServices;
 public class LeaseController {
 	
 	
-	private leaseServices lServices;
+	private LeaseServices lServices;
+	
 	
 	@Autowired
-	public LeaseController(leaseServices lServices) {
+	public LeaseController(LeaseServices lServices) {
 		super();
 		this.lServices = lServices;
 	}
@@ -39,12 +39,16 @@ public class LeaseController {
 	
 			@RequestMapping(method=RequestMethod.GET)
 			public List<Lease> getAllLease() {
-				return lServices.findAllLease();
+				return lServices.findAll();
 			}
 			
-			@RequestMapping(method=RequestMethod.GET)
-			public BlankLease getBlankLease() {
-				return lServices.findBlankLease();
+			@GetMapping("/{blank}")
+			public ResponseEntity<Lease> getBlankLease(@PathVariable("blank") int id) {
+				Lease r = lServices.getBlankLease(id);
+				if(r==null) {
+					return ResponseEntity.status(HttpStatus.SC_NO_CONTENT).build(); 
+				}
+				return ResponseEntity.status(HttpStatus.SC_ACCEPTED).body(r);
 			}
 			
 			@GetMapping("/{id}") 
@@ -59,8 +63,8 @@ public class LeaseController {
 			
 			
 			@PutMapping
-			public ResponseEntity<Lease> updateLease(@RequestBody int id) {
-				Lease lease = lServices.updateLease(id);
+			public ResponseEntity<Lease> updateLease(@RequestBody Lease l) {
+				Lease lease = lServices.updateLease(l);
 				if(lease==null) {
 					return ResponseEntity.status(HttpStatus.SC_NO_CONTENT).build(); 
 				}

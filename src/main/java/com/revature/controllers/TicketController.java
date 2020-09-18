@@ -14,14 +14,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.models.MaintenanceTicket;
+import com.revature.repositories.ITicketDAO;
 import com.revature.services.TicketServices;
 
 
+
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-@Controller
-@RequestMapping(value = "/pokemon")
+@RestController
+@RequestMapping(value = "/Ticket")
 @ResponseBody
 public class TicketController {
 
@@ -50,7 +53,7 @@ public class TicketController {
 	//do we need to add a controller that looks for tickets by author AND statusID?
 	
 	@PostMapping
-	public List<MaintenanceTicket> addTicket(@RequestBody MaintenanceTicket t) {
+	public MaintenanceTicket addTicket(@RequestBody MaintenanceTicket t) {
 		return ts.addTicket(t);
 	}
 	
