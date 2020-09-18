@@ -24,21 +24,21 @@ import com.revature.models.UserDTO;
 import com.revature.repositories.IUserDAO;
 import com.revature.services.UserServices;
 
-
-
 @RestController
 //Adding the URI mapping for what requests this controller will handle
+<<<<<<< HEAD
 @RequestMapping(value="/user")
 @ResponseBody //This will at compile time add @ResponseBody to all methods in the class
 @CrossOrigin(origins = "*", allowedHeaders = "*")
+=======
+@RequestMapping(value = "/user")
+@ResponseBody // This will at compile time add @ResponseBody to all methods in the class
+>>>>>>> 53361b4acc29853585d6aebf37e976df8d62cb9d
 public class UserController {
 
-	
 	private UserServices uServices;
-	
 
-
-	@Autowired 
+	@Autowired
 	public UserController(UserServices uServices) {
 		super();
 		this.uServices = uServices;
@@ -48,56 +48,60 @@ public class UserController {
 	public @ResponseBody User login(@RequestBody LoginDTO loginDTO) {
 		return uServices.login(loginDTO.username, loginDTO.password);
 
-}
+	}
 //	@PostMapping("/register")
 //	public @ResponseBody User register(@RequestBody UserDTO loginDTO) {
 //		return uServices.register(loginDTO);
 //
 //	}
-	
-	//indicates that a get method to the base URI of the controller (/avenger) will call this method.
-		@RequestMapping(method=RequestMethod.GET)
-		//@ResponseBody //This will make sure the response is sent back with JSON
-		public List<User> assemble() {
-			return uServices.findAll();
+
+	// indicates that a get method to the base URI of the controller (/avenger) will
+	// call this method.
+	@RequestMapping(method = RequestMethod.GET)
+	// @ResponseBody //This will make sure the response is sent back with JSON
+	public List<User> assemble() {
+		return uServices.findAll();
+	}
+
+	@GetMapping("/{id}") // Get mapping will direct GET requests to the given mapping. It avoids having
+							// to use the method paramater
+	public ResponseEntity<User> findById(@PathVariable("id") int id) { // @PathVariable allows you to get the Path
+																		// Parameter out of the URI
+		User a = uServices.findById(id);
+		if (a == null) {
+			return ResponseEntity.status(HttpStatus.SC_NO_CONTENT).build(); // sends back an empty body in the response.
 		}
-		
-		@GetMapping("/{id}") //Get mapping will direct GET requests to the given mapping. It avoids having to use the method paramater
-		public ResponseEntity<User> findById(@PathVariable("id") int id) { //@PathVariable allows you to get the Path Parameter out of the URI
-			User a = uServices.findById(id);
-			if(a==null) {
-				return ResponseEntity.status(HttpStatus.SC_NO_CONTENT).build(); //sends back an empty body in the response. 
-			}
-			return ResponseEntity.status(HttpStatus.SC_ACCEPTED).body(a);
+		return ResponseEntity.status(HttpStatus.SC_ACCEPTED).body(a);
+	}
+
+	@GetMapping("/{role}") // Get mapping will direct GET requests to the given mapping. It avoids having
+							// to use the method paramater
+	public ResponseEntity<Role> findUserRole(@PathVariable("role") int id) { // @PathVariable allows you to get the Path
+																				// Parameter out of the URI
+		Role r = uServices.findUserRole(id);
+		if (r == null) {
+			return ResponseEntity.status(HttpStatus.SC_NO_CONTENT).build(); // sends back an empty body in the response.
 		}
-		
-		@GetMapping("/{role}") //Get mapping will direct GET requests to the given mapping. It avoids having to use the method paramater
-		public ResponseEntity<Role> findUserRole(@PathVariable("role") int id) { //@PathVariable allows you to get the Path Parameter out of the URI
-			Role r = uServices.findUserRole(id);
-			if(r==null) {
-				return ResponseEntity.status(HttpStatus.SC_NO_CONTENT).build(); //sends back an empty body in the response. 
-			}
-			return ResponseEntity.status(HttpStatus.SC_ACCEPTED).body(r);
+		return ResponseEntity.status(HttpStatus.SC_ACCEPTED).body(r);
+	}
+
+	@PutMapping
+	public ResponseEntity<User> updateUser(@RequestBody User p) {// Takes the JSON from the request and puts it in the
+																	// indicated object
+		p = uServices.updateUser(p);
+		if (p == null) {
+			return ResponseEntity.status(HttpStatus.SC_NO_CONTENT).build(); // sends back an empty body in the response.
 		}
-		
-		@PutMapping
-		public ResponseEntity<User> updateUser(@RequestBody User p) {// Takes the JSON from the request and puts it in the indicated object
-			p = uServices.updateUser(p);
-			if(p==null) {
-				return ResponseEntity.status(HttpStatus.SC_NO_CONTENT).build(); //sends back an empty body in the response. 
-			}
-			return ResponseEntity.status(HttpStatus.SC_ACCEPTED).body(p);
+		return ResponseEntity.status(HttpStatus.SC_ACCEPTED).body(p);
+	}
+
+	@PostMapping
+	public ResponseEntity<User> addUser(@RequestBody User p) {
+		User temp = uServices.addUser(p);
+		if (temp == null) {
+			return ResponseEntity.status(HttpStatus.SC_NO_CONTENT).build(); // sends back an empty body in the response.
 		}
-		
-		
-		@PostMapping
-		public ResponseEntity<User> addUser(@RequestBody User p) {
-			User temp = uServices.addUser(p);
-			if (temp == null) {
-				return ResponseEntity.status(HttpStatus.SC_NO_CONTENT).build(); //sends back an empty body in the response. 
-			}
-			return ResponseEntity.status(HttpStatus.SC_ACCEPTED).body(p);
-		}
-		
-		
+		return ResponseEntity.status(HttpStatus.SC_ACCEPTED).body(p);
+	}
+
 }

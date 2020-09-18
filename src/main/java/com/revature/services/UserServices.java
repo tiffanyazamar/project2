@@ -25,15 +25,6 @@ public class UserServices {
 	}
 	
 	
-
-	public User login(String username, String password) {
-		try {
-			return userDAO.findByUsernameAndPassword(username, Hash.generateHash(password, "MD5"));
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
 //
 //	public User register(UserDTO loginDTO) {
 ////		Role userRole = new Role();
@@ -67,6 +58,12 @@ public class UserServices {
 
 	public User updateUser(User p) {
 		return userDAO.save(p);
+	}
+
+
+	public User login(String username, String password) {
+		// TODO Auto-generated method stub
+		return userDAO.findUserByUsernameAndPassword(username, password);
 	}
 	
 }
