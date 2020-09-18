@@ -2,10 +2,12 @@ package com.revature.daos;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+
 import com.revature.models.MaintenanceTicket;
 import com.revature.models.TicketStatus;
 
-public interface ITicketDAO {
+public interface ITicketDAO extends JpaRepository<MaintenanceTicket, Integer>{
 
 	MaintenanceTicket findById(int id);
 

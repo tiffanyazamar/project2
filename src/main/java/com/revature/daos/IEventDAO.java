@@ -4,10 +4,12 @@ import java.sql.Date;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+
 import com.revature.models.Event;
 
 
-public interface IEventDAO {
+public interface IEventDAO extends JpaRepository<Event, Integer>{
 	
 	public List<Event> findAll();
 	public Event findByDate(Date date);
