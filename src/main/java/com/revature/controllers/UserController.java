@@ -42,11 +42,11 @@ public class UserController {
 		this.uServices = uServices;
 	}
 
-//	@PostMapping("/login")
-//	public @ResponseBody User login(@RequestBody LoginDTO loginDTO) {
-//		return uServices.login(loginDTO.username, loginDTO.password);
-//
-//	}
+	@PostMapping("/login")
+	public @ResponseBody User login(@RequestBody LoginDTO loginDTO) {
+		return uServices.login(loginDTO.username, loginDTO.password);
+
+}
 //	@PostMapping("/register")
 //	public @ResponseBody User register(@RequestBody UserDTO loginDTO) {
 //		return uServices.register(loginDTO);

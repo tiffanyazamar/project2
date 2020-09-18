@@ -16,4 +16,6 @@ public interface IUserDAO  extends JpaRepository<User, Integer>{
 
 	Role userRole(int id);
 
+	User findByUsernameAndPassword(String username, String generateHash);
+
 }

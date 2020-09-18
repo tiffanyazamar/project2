@@ -25,15 +25,15 @@ public class UserServices {
 	}
 	
 	
-//
-//	public User login(String username, String password) {
-//		try {
-//			return userDAO.findByUsernameAndPassword(username, Hash.generateHash(password, "MD5"));
-//		} catch (NoSuchAlgorithmException e) {
-//			e.printStackTrace();
-//		}
-//		return null;
-//	}
+
+	public User login(String username, String password) {
+		try {
+			return userDAO.findByUsernameAndPassword(username, Hash.generateHash(password, "MD5"));
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 //
 //	public User register(UserDTO loginDTO) {
 ////		Role userRole = new Role();
