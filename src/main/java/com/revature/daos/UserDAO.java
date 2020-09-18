@@ -20,7 +20,7 @@ import com.revature.models.User;
 
 @Repository
 @Transactional
-public class UserDAO implements IUserDao {
+public class UserDAO implements IUserDAO {
 
 	private static final Logger log = LogManager.getLogger(UserDAO.class);
 	private SessionFactory sf;
