@@ -27,7 +27,7 @@ public class EventServices {
 		return edao.findAll();
 	}
 	
-	public Event findByDate(Date date) {
+	public List<Event> findByDate(Date date) {
 		return edao.findByEventDate(date);
 	}
 	

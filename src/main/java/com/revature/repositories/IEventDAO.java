@@ -10,7 +10,7 @@ import com.revature.models.Event;
 
 public interface IEventDAO  extends JpaRepository<Event, Integer> {
 
-	Event findByEventDate(Date date);
+	List<Event> findByEventDate(Date date);
 
 
 //	List<Event> findUpcoming(Date date);
@@ -20,3 +20,4 @@ public interface IEventDAO  extends JpaRepository<Event, Integer> {
 	List<Event> findByEventCreator(int id);
 	
 }
+	

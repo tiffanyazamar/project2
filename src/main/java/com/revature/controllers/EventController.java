@@ -45,8 +45,8 @@ public class EventController {
 	}
 
 	@GetMapping("/{date}")
-	public ResponseEntity<Event> findByDate(@PathVariable("date") Date date) {
-		Event a = es.findByDate(date);
+	public ResponseEntity<List<Event>> findByDate(@PathVariable("date") Date date) {
+		List<Event> a = es.findByDate(date);
 		if (a == null) {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		}
