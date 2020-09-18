@@ -11,6 +11,9 @@ import javax.persistence.Id;
 
 import javax.persistence.Table;
 
+import org.springframework.stereotype.Component;
+
+@Component
 @Entity
 @Table(name="user_roles")
 public class Role implements Serializable {
@@ -42,7 +45,6 @@ public class Role implements Serializable {
 
 	public Role() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 
