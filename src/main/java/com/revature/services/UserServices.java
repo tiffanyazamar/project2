@@ -25,10 +25,6 @@ public class UserServices {
 	}
 	
 	
-
-	public User login(String username, String password) {
-		return userDAO.findByUsernameAndPassword(username, password);
-	}
 //
 //	public User register(UserDTO loginDTO) {
 ////		Role userRole = new Role();
@@ -62,6 +58,12 @@ public class UserServices {
 
 	public User updateUser(User p) {
 		return userDAO.save(p);
+	}
+
+
+	public User login(String username, String password) {
+		// TODO Auto-generated method stub
+		return userDAO.findUserByUsernameAndPassword(username, password);
 	}
 	
 }
