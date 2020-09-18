@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.revature.daos.UserDAO;
+import com.revature.daos.IUserDAO;
 import com.revature.models.Role;
 import com.revature.models.User;
 import com.revature.models.UserDTO;
@@ -16,7 +16,7 @@ import com.revature.utils.Hash;
 public class UserServices {
 
 	@Autowired
-	private UserDAO userDAO;
+	private IUserDAO userDAO;
 
 	public User login(String username, String password) {
 		try {
