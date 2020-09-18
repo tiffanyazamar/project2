@@ -12,6 +12,7 @@ import java.util.List;
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +25,7 @@ import com.revature.repositories.IUserDAO;
 import com.revature.services.UserServices;
 
 
-
+@CrossOrigin
 @RestController
 //Adding the URI mapping for what requests this controller will handle
 @RequestMapping(value="/user")

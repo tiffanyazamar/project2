@@ -1,6 +1,7 @@
 package com.revature.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -27,14 +28,19 @@ public class TicketServices {
 		return tdao.findAll();
 	}
 	
-	public MaintenanceTicket findByStatusId(int sid) {
+	public List<MaintenanceTicket> findByStatusId(int sid) {
 		log.info("Finding Maintenance Ticket by Status ID");
-		return (MaintenanceTicket) tdao.findByStatusId(sid);
+		return tdao.findByStatusId(sid);
 	}
 	
-	public MaintenanceTicket addTicket(MaintenanceTicket t) {
+	public List<MaintenanceTicket> addTicket(MaintenanceTicket t) {
 		log.info("Adding Maintenance Ticket");
-		return tdao.save(t);
+		return (List<MaintenanceTicket>) tdao.save(t);
+	}
+
+	public Optional<MaintenanceTicket> findById(int id) {
+		log.info("Finding Maintenance Ticket by ID");
+		return tdao.findById(id);
 	}
 }
 

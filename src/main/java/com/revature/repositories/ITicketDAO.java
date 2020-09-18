@@ -22,6 +22,6 @@ public interface ITicketDAO  extends JpaRepository<MaintenanceTicket, Integer> {
 //
 //	List<MaintenanceTicket> findAll();
 //
-	public MaintenanceTicket findByStatusId(int sId);
+	public List<MaintenanceTicket> findByStatusId(int sId);
 
 }

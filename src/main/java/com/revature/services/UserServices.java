@@ -27,12 +27,7 @@ public class UserServices {
 	
 
 	public User login(String username, String password) {
-		try {
-			return userDAO.findByUsernameAndPassword(username, Hash.generateHash(password, "MD5"));
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
-		return null;
+		return userDAO.findByUsernameAndPassword(username, password);
 	}
 //
 //	public User register(UserDTO loginDTO) {
