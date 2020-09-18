@@ -22,10 +22,11 @@ import com.revature.services.TicketServices;
 
 
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+
 @RestController
 @RequestMapping(value = "/Ticket")
 @ResponseBody
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class TicketController {
 
 	TicketServices ts;

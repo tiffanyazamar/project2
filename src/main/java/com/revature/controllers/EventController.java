@@ -24,10 +24,11 @@ import com.revature.services.EventServices;
 
 
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+
 @RestController
 @RequestMapping(value = "/Event")
 @ResponseBody
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class EventController {
 	
 	@Autowired
