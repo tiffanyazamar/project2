@@ -23,7 +23,7 @@ import com.revature.services.UserServices;
 import com.revature.services.leaseServices;
 
 @RestController
-@RequestMapping(value="/lease")
+@RequestMapping(value="lease")
 @ResponseBody 
 public class LeaseController {
 	
@@ -42,10 +42,10 @@ public class LeaseController {
 				return lServices.findAllLease();
 			}
 			
-			@RequestMapping(method=RequestMethod.GET)
-			public BlankLease getBlankLease() {
-				return lServices.findBlankLease();
-			}
+//			@RequestMapping(method=RequestMethod.GET)
+//			public BlankLease getBlankLease() {
+//				return lServices.findBlankLease();
+//			}
 			
 			@GetMapping("/{id}") 
 			public ResponseEntity<Lease> findLeaseByTenant(@PathVariable("id") int id) {

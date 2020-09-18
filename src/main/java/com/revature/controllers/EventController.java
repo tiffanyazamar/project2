@@ -21,7 +21,7 @@ import com.revature.models.Event;
 import com.revature.services.EventServices;
 
 
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+@CrossOrigin
 @RestController
 @RequestMapping(value = "event")
 public class EventController {

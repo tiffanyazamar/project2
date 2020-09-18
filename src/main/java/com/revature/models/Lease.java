@@ -17,6 +17,8 @@ import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Component
 @Entity
 @Table(name="lease")
@@ -40,6 +42,7 @@ public class Lease implements Serializable {
 	private boolean landlordSig;
 	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinColumn(name="user_id", nullable=false)
+	@JsonBackReference
 	private User user;
 	
 

@@ -20,6 +20,8 @@ import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Component
 @Entity
 @Table(name="events")
@@ -39,6 +41,7 @@ public class Event implements Serializable{
 	private Date eventDate;
 	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinColumn(name="user_id", nullable=false)
+	@JsonBackReference
 	private User eventCreator;
 	@ManyToMany(cascade = { CascadeType.ALL })
 	@JoinTable(
