@@ -38,6 +38,7 @@ public class TicketController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
+	@ResponseBody
 	public List<MaintenanceTicket> getAll() {
 		return ts.getAll();
 	}

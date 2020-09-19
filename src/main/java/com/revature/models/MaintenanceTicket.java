@@ -27,6 +27,7 @@ public class MaintenanceTicket implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="ticket_id")
 	private int ticketId;
+	@Column(name="description")
 	private String description;
 	@Column (nullable=false)
 	private Timestamp submitted;
