@@ -20,7 +20,7 @@ public class TicketStatus implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="ticket_id")
+	@Column(name="status_id")
 	private int statusId;
 	@Column (nullable=false)
 	private String status;

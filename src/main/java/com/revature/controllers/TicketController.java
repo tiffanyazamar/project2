@@ -38,7 +38,11 @@ public class TicketController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public List<MaintenanceTicket> getAll() {
-		return ts.getAll();
+		List<MaintenanceTicket> list= ts.getAll();
+		for (MaintenanceTicket t : list) {
+			System.out.println(t);
+		}
+		return list;
 	}
 
 	@GetMapping("/{statusID}")

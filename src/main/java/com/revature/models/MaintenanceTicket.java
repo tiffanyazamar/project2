@@ -16,6 +16,8 @@ import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Component
 @Entity
 @Table (name="maintenance_tickets")
@@ -30,18 +32,28 @@ public class MaintenanceTicket implements Serializable {
 	private String description;
 	@Column (nullable=false)
 	private Timestamp submitted;
-	@Column (nullable=false)
+	@Column 
 	private Timestamp resolved;
 	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinColumn(name="user_id", nullable=false)
+	@JsonBackReference
 	private User author;
-	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
 	@JoinColumn(name="status_id", nullable=false)
+	@JsonBackReference
 	private TicketStatus statusId;
 	
 	public MaintenanceTicket() {
 		super();
 	}
+	
+	
+	public MaintenanceTicket(String description, User author) {
+		super();
+		this.description = description;
+		this.author = author;
+	}
+
 
 	public MaintenanceTicket(int ticketId, String description, Timestamp submitted, Timestamp resolved, User author,
 			TicketStatus statusId) {
