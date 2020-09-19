@@ -16,10 +16,12 @@ import javax.persistence.JoinColumn;
 
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Component
 @Entity
@@ -47,6 +49,9 @@ public class User implements Serializable{
 	private Role userRole;
 	@ManyToMany(mappedBy="userList")
 	private List<Event> eventList = new ArrayList<Event>();
+	@OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
+	@JsonManagedReference //prevents infinite loops in my json
+	private List<MaintenanceTicket> tickets;
 	
 	public User() {
 		super();
@@ -67,7 +72,7 @@ public class User implements Serializable{
 
 
 	public User(int userID, String username, String password, String firstName, String lastName, String phoneNumber,
-			Role userRole, Blob signedLease, List<Event> eventList) {
+			Role userRole, Blob signedLease, List<Event> eventList, List<MaintenanceTicket> tickets) {
 		super();
 		this.userID = userID;
 		this.username = username;
@@ -76,11 +81,12 @@ public class User implements Serializable{
 		this.lastName = lastName;
 		this.phoneNumber = phoneNumber;
 		this.userRole = userRole;
+		this.tickets = tickets;
 
 //		this.eventList = eventList;
 	}
 
-	public User(String username, String password, String firstName, String lastName, String phoneNumber, Role userRole, List<Event> eventList) {
+	public User(String username, String password, String firstName, String lastName, String phoneNumber, Role userRole, List<Event> eventList, List<MaintenanceTicket> tickets) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -89,12 +95,21 @@ public class User implements Serializable{
 		this.phoneNumber = phoneNumber;
 		this.userRole = userRole;
 //		this.eventList = eventList;
+		this.tickets = tickets;
 	}
 
 	public User(String username, String password) {
 		super();
 		this.username = username;
 		this.password = password;
+	}
+
+	public List<MaintenanceTicket> getTickets() {
+		return tickets;
+	}
+
+	public void setTickets(List<MaintenanceTicket> tickets) {
+		this.tickets = tickets;
 	}
 
 	public int getUserID() {
@@ -166,13 +181,6 @@ public class User implements Serializable{
 	
 
 	@Override
-	public String toString() {
-		return "User [userID=" + userID + ", username=" + username + ", password=" + password + ", firstName="
-				+ firstName + ", lastName=" + lastName + ", phoneNumber=" + phoneNumber + ", userRole=" + userRole
-				+ ", eventList=" + eventList + "]";
-	}
-
-	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -234,6 +242,13 @@ public class User implements Serializable{
 		} else if (!username.equals(other.username))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "User [userID=" + userID + ", username=" + username + ", password=" + password + ", firstName="
+				+ firstName + ", lastName=" + lastName + ", phoneNumber=" + phoneNumber + ", userRole=" + userRole
+				+ ", eventList=" + eventList + ", tickets=" + tickets + "]";
 	}
 	
 	

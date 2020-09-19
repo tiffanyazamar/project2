@@ -24,12 +24,19 @@ import com.revature.models.UserDTO;
 import com.revature.repositories.IUserDAO;
 import com.revature.services.UserServices;
 
+
 @RestController
 //Adding the URI mapping for what requests this controller will handle
+<<<<<<< HEAD
 @RequestMapping(value="/user")
 @ResponseBody //This will at compile time add @ResponseBody to all methods in the class
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 
+=======
+@CrossOrigin(origins = "*", allowedHeaders = "*")
+@RequestMapping(value = "/user")
+@ResponseBody // This will at compile time add @ResponseBody to all methods in the class
+>>>>>>> e69418a09c064516d35fb4507edc7d0fecdbe0f4
 public class UserController {
 
 	private UserServices uServices;

@@ -1,11 +1,11 @@
 package com.revature.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,14 +17,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.models.MaintenanceTicket;
-import com.revature.repositories.ITicketDAO;
 import com.revature.services.TicketServices;
 
 
 
 
 @RestController
-@RequestMapping(value = "/Ticket")
+@RequestMapping(value = "/ticket")
 @ResponseBody
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class TicketController {
@@ -40,23 +39,40 @@ public class TicketController {
 	@RequestMapping(method = RequestMethod.GET)
 	@ResponseBody
 	public List<MaintenanceTicket> getAll() {
-		return ts.getAll();
+		List<MaintenanceTicket> list= ts.getAll();
+		for (MaintenanceTicket t : list) {
+			System.out.println(t);
+		}
+		return list;
 	}
 
 	@GetMapping("/{statusID}")
-	public ResponseEntity<MaintenanceTicket> findByStatusId(@PathVariable("statusID") int sId) {
-		MaintenanceTicket a = ts.findByStatusId(sId);
+	public ResponseEntity<List<MaintenanceTicket>> findByStatusId(@PathVariable("statusID") int sId) {
+		List<MaintenanceTicket> a = ts.findByStatusId(sId);
 		if (a == null) {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		}
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(a);
 	}
 	
+	@GetMapping("/{id}")
+	public ResponseEntity<MaintenanceTicket> findById(@PathVariable("id") int id) {
+		Optional<MaintenanceTicket> t = ts.findById(id);
+		if(t.isPresent()) {
+			MaintenanceTicket mt = t.get();
+			return ResponseEntity.status(HttpStatus.OK).body(mt);
+		} else {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		}
+		
+	}
+	
 	//do we need to add a controller that looks for tickets by author AND statusID?
 	
 	@PostMapping
-	public MaintenanceTicket addTicket(@RequestBody MaintenanceTicket t) {
-		return ts.addTicket(t);
+	public ResponseEntity<List<MaintenanceTicket>> addTicket(@RequestBody MaintenanceTicket t) {
+		ts.addTicket(t);
+		return ResponseEntity.status(HttpStatus.OK).body(ts.getAll());
 	}
 	
 }
