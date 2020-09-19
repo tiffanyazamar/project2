@@ -1,15 +1,20 @@
 package com.revature.models;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Component
 @Entity
@@ -24,6 +29,17 @@ public class TicketStatus implements Serializable {
 	private int statusId;
 	@Column (nullable=false)
 	private String status;
+	@OneToMany(mappedBy = "statusId", fetch = FetchType.EAGER)
+	@JsonManagedReference //prevents infinite loops in my json
+	private List<MaintenanceTicket> tickets;
+	
+	
+	public TicketStatus(int statusId, String status, List<MaintenanceTicket> tickets) {
+		super();
+		this.statusId = statusId;
+		this.status = status;
+		this.tickets = tickets;
+	}
 	public TicketStatus(int statusId, String status) {
 		super();
 		this.statusId = statusId;
@@ -37,6 +53,7 @@ public class TicketStatus implements Serializable {
 		super();
 		this.status = status;
 	}
+	
 	public int getStatusId() {
 		return statusId;
 	}
@@ -49,12 +66,20 @@ public class TicketStatus implements Serializable {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	public List<MaintenanceTicket> getTickets() {
+		return tickets;
+	}
+	public void setTickets(List<MaintenanceTicket> tickets) {
+		this.tickets = tickets;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + statusId;
+		result = prime * result + ((tickets == null) ? 0 : tickets.hashCode());
 		return result;
 	}
 	@Override
@@ -73,12 +98,18 @@ public class TicketStatus implements Serializable {
 			return false;
 		if (statusId != other.statusId)
 			return false;
+		if (tickets == null) {
+			if (other.tickets != null)
+				return false;
+		} else if (!tickets.equals(other.tickets))
+			return false;
 		return true;
 	}
 	@Override
 	public String toString() {
-		return "TicketStatus [statusId=" + statusId + ", status=" + status + "]";
+		return "TicketStatus [statusId=" + statusId + ", status=" + status + ", tickets=" + tickets + "]";
 	}
+
 	
 	
 

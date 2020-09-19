@@ -63,7 +63,15 @@ public class TicketController {
 		} else {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		}
-		
+	}
+	
+	@GetMapping("/user/{user}")
+	public ResponseEntity<List<MaintenanceTicket>> findByAuthor(@PathVariable("user") int user) {
+		List<MaintenanceTicket> tickets = ts.findByUser(user);
+		if (tickets == null) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		}
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(tickets);
 	}
 	
 	//do we need to add a controller that looks for tickets by author AND statusID?

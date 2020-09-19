@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.revature.repositories.ITicketDAO;
 import com.revature.repositories.ITicketStatusDAO;
 import com.revature.repositories.IUserDAO;
+import com.revature.models.Event;
 import com.revature.models.MaintenanceTicket;
 
 @Service
@@ -47,6 +48,11 @@ public class TicketServices {
 	public Optional<MaintenanceTicket> findById(int id) {
 		log.info("Finding Maintenance Ticket by ID");
 		return tdao.findById(id);
+	}
+
+	public List<MaintenanceTicket> findByUser(int id) {
+		log.info("Finding Maintenance Ticket by UserID");
+		return tdao.findByAuthor(id);
 	}
 }
 
