@@ -18,10 +18,14 @@ public class UserServices {
 	
 	private IUserDAO userDAO;
 	
+//	@Autowired
+	private RoleService roleService;
+//	
 	@Autowired
-	public UserServices(IUserDAO userDAO) {
+	public UserServices(IUserDAO userDAO, RoleService roleService) {
 		super();
 		this.userDAO = userDAO;
+		this.roleService = roleService;
 	}
 	
 	
@@ -48,22 +52,33 @@ public class UserServices {
 		return userDAO.findAll();
 		
 	}
-	public User addUser(User u) {
-		return userDAO.save(u);
-	}
+//	public User addUser(UserDTO p) {
+//		Role userRole = roleService.findByName("Tenant");
+//		User user = new User(p.userName, p.password, p.firstName, p.lastName, p.phoneNumber, userRole);
+//		return userDAO.save(user);
+//	}
 	public Role findUserRole(int id) {
 		return userDAO.userRole(id);
 		
 	}
 
 	public User updateUser(User p) {
+		
+		
 		return userDAO.save(p);
 	}
 
 
 	public User login(String username, String password) {
-		// TODO Auto-generated method stub
 		return userDAO.findUserByUsernameAndPassword(username, password);
+	}
+
+
+	public User addUser(UserDTO p) {
+		Role userRole = roleService.findByName("Tenant");
+		User user = new User(p.username, p.password, p.firstName, p.lastName, p.phoneNumber, userRole);
+		userDAO.save(user);
+		return user;
 	}
 	
 }
