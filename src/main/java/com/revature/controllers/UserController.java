@@ -87,7 +87,7 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.SC_ACCEPTED).body(r);
 	}
 
-	@PutMapping
+	@PostMapping("/update")
 	public ResponseEntity<User> updateUser(@RequestBody User p) {// Takes the JSON from the request and puts it in the
 																	// indicated object
 		p = uServices.updateUser(p);
@@ -97,13 +97,13 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.SC_ACCEPTED).body(p);
 	}
 
-	@PostMapping
-	public ResponseEntity<User> addUser(@RequestBody User p) {
+	@PostMapping("register")
+	public ResponseEntity<User> addUser(@RequestBody UserDTO p) {
 		User temp = uServices.addUser(p);
 		if (temp == null) {
 			return ResponseEntity.status(HttpStatus.SC_NO_CONTENT).build(); // sends back an empty body in the response.
 		}
-		return ResponseEntity.status(HttpStatus.SC_ACCEPTED).body(p);
+		return ResponseEntity.status(HttpStatus.SC_ACCEPTED).body(temp);
 	}
 
 }
