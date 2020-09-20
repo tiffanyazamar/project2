@@ -49,11 +49,11 @@ public class User implements Serializable{
 	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinColumn(name="user_role_id", nullable=false)
 	private Role userRole;
-	@ManyToMany(mappedBy="userList")
-	private List<Event> eventList = new ArrayList<Event>();
-	@OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
-	@JsonManagedReference(value="user")//prevents infinite loops in my json
-	private List<MaintenanceTicket> tickets;
+//	@ManyToMany(mappedBy="userList")
+//	private List<Event> eventList = new ArrayList<Event>();
+//	@OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
+//	@JsonManagedReference(value="user")//prevents infinite loops in my json
+//	private List<MaintenanceTicket> tickets;
 	
 	public User() {
 		super();
@@ -73,32 +73,18 @@ public class User implements Serializable{
 
 
 
+
 	public User(int userID, String username, String password, String firstName, String lastName, String phoneNumber,
-			Role userRole, Blob signedLease, List<Event> eventList, List<MaintenanceTicket> tickets) {
-		super();
-		this.userID = userID;
-		this.username = username;
-		this.password = password;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.phoneNumber = phoneNumber;
-		this.userRole = userRole;
-		this.tickets = tickets;
-
-//		this.eventList = eventList;
-	}
-
-	public User(String username, String password, String firstName, String lastName, String phoneNumber, Role userRole, List<Event> eventList, List<MaintenanceTicket> tickets) {
-		super();
-		this.username = username;
-		this.password = password;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.phoneNumber = phoneNumber;
-		this.userRole = userRole;
-//		this.eventList = eventList;
-		this.tickets = tickets;
-	}
+		Role userRole) {
+	super();
+	this.userID = userID;
+	this.username = username;
+	this.password = password;
+	this.firstName = firstName;
+	this.lastName = lastName;
+	this.phoneNumber = phoneNumber;
+	this.userRole = userRole;
+}
 
 	public User(String username, String password) {
 		super();
@@ -106,13 +92,13 @@ public class User implements Serializable{
 		this.password = password;
 	}
 
-	public List<MaintenanceTicket> getTickets() {
-		return tickets;
-	}
-
-	public void setTickets(List<MaintenanceTicket> tickets) {
-		this.tickets = tickets;
-	}
+//	public List<MaintenanceTicket> getTickets() {
+//		return tickets;
+//	}
+//
+//	public void setTickets(List<MaintenanceTicket> tickets) {
+//		this.tickets = tickets;
+//	}
 
 	public int getUserID() {
 		return userID;
@@ -172,13 +158,13 @@ public class User implements Serializable{
 
 	
 
-	public List<Event> getEventList() {
-		return eventList;
-	}
-
-	public void setEventList(List<Event> eventList) {
-		this.eventList = eventList;
-	}
+//	public List<Event> getEventList() {
+//		return eventList;
+//	}
+//
+//	public void setEventList(List<Event> eventList) {
+//		this.eventList = eventList;
+//	}
 
 	
 
@@ -250,7 +236,7 @@ public class User implements Serializable{
 	public String toString() {
 		return "User [userID=" + userID + ", username=" + username + ", password=" + password + ", firstName="
 				+ firstName + ", lastName=" + lastName + ", phoneNumber=" + phoneNumber + ", userRole=" + userRole
-				+ ", eventList=" + eventList + ", tickets=" + tickets + "]";
+				+ "]";
 	}
 	
 	

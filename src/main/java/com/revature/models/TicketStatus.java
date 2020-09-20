@@ -24,6 +24,9 @@ public class TicketStatus implements Serializable {
 	private int statusId;
 	@Column (nullable=false)
 	private String status;
+	
+	
+	
 	public TicketStatus(int statusId, String status) {
 		super();
 		this.statusId = statusId;

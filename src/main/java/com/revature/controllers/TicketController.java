@@ -23,8 +23,7 @@ import com.revature.services.TicketServices;
 
 
 @RestController
-@RequestMapping(value = "/Ticket")
-@ResponseBody
+@RequestMapping(value = "/ticket")
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class TicketController {
 
@@ -37,13 +36,8 @@ public class TicketController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
-	@ResponseBody
 	public List<MaintenanceTicket> getAll() {
-		List<MaintenanceTicket> list= ts.getAll();
-		for (MaintenanceTicket t : list) {
-			System.out.println(t);
-		}
-		return list;
+		return ts.getAll();
 	}
 
 	@GetMapping("/{statusID}")

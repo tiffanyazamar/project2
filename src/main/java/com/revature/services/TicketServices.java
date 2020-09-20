@@ -30,7 +30,7 @@ public class TicketServices {
 	
 	public List<MaintenanceTicket> getAll() {
 		log.info("Finding all Maintenance Tickets");
-		System.out.println(tdao.findAll());
+		System.out.println("<3"  + tdao.findAll());
 		return tdao.findAll();
 	}
 	
