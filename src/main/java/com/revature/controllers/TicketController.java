@@ -23,7 +23,7 @@ import com.revature.services.TicketServices;
 
 
 @RestController
-@RequestMapping(value = "/ticket")
+@RequestMapping(value = "/Ticket")
 @ResponseBody
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class TicketController {
@@ -37,6 +37,7 @@ public class TicketController {
 	}
 
 	@RequestMapping(method = RequestMethod.GET)
+	@ResponseBody
 	public List<MaintenanceTicket> getAll() {
 		List<MaintenanceTicket> list= ts.getAll();
 		for (MaintenanceTicket t : list) {
@@ -79,6 +80,7 @@ public class TicketController {
 	@PostMapping
 	public ResponseEntity<List<MaintenanceTicket>> addTicket(@RequestBody MaintenanceTicket t) {
 		ts.addTicket(t);
+		System.out.println(t);
 		return ResponseEntity.status(HttpStatus.OK).body(ts.getAll());
 	}
 	

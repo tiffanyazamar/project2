@@ -8,6 +8,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.revature.repositories.ITicketDAO;
 import com.revature.repositories.ITicketStatusDAO;
@@ -30,6 +31,7 @@ public class TicketServices {
 	
 	public List<MaintenanceTicket> getAll() {
 		log.info("Finding all Maintenance Tickets");
+		System.out.println(tdao.findAll());
 		return tdao.findAll();
 	}
 	
@@ -38,11 +40,12 @@ public class TicketServices {
 		return tdao.findByStatusId(sid);
 	}
 	
-	public List<MaintenanceTicket> addTicket(MaintenanceTicket t) {
+	@Transactional
+	public MaintenanceTicket addTicket(MaintenanceTicket t) {
 		log.info("Adding Maintenance Ticket");
 		t.setStatusId(tsdao.findById(1).get());
 		t.setSubmitted(new Timestamp(System.currentTimeMillis()));
-		return (List<MaintenanceTicket>) tdao.save(t);
+		return tdao.save(t);
 	}
 
 	public Optional<MaintenanceTicket> findById(int id) {

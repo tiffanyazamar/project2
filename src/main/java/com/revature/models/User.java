@@ -21,11 +21,13 @@ import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Component
 @Entity
 @Table(name="users")
+//@JsonIgnoreProperties("tickets")
 public class User implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -49,8 +51,8 @@ public class User implements Serializable{
 	private Role userRole;
 	@ManyToMany(mappedBy="userList")
 	private List<Event> eventList = new ArrayList<Event>();
-	@OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
-	@JsonManagedReference //prevents infinite loops in my json
+	@OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
+	@JsonManagedReference(value="user")//prevents infinite loops in my json
 	private List<MaintenanceTicket> tickets;
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 	@JsonManagedReference

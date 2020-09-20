@@ -27,9 +27,10 @@ import com.revature.services.UserServices;
 
 @RestController
 //Adding the URI mapping for what requests this controller will handle
+
+@RequestMapping(value="/user")
+@ResponseBody //This will at compile time add @ResponseBody to all methods in the class
 @CrossOrigin(origins = "*", allowedHeaders = "*")
-@RequestMapping(value = "/user")
-@ResponseBody // This will at compile time add @ResponseBody to all methods in the class
 public class UserController {
 
 	private UserServices uServices;
@@ -54,7 +55,7 @@ public class UserController {
 	// indicates that a get method to the base URI of the controller (/avenger) will
 	// call this method.
 	@RequestMapping(method = RequestMethod.GET)
-	// @ResponseBody //This will make sure the response is sent back with JSON
+	@ResponseBody //This will make sure the response is sent back with JSON
 	public List<User> assemble() {
 		return uServices.findAll();
 	}
