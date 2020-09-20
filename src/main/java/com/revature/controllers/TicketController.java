@@ -23,7 +23,7 @@ import com.revature.services.TicketServices;
 
 
 @RestController
-@RequestMapping(value = "/ticket")
+@RequestMapping(value = "/Ticket")
 @ResponseBody
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class TicketController {
@@ -72,6 +72,7 @@ public class TicketController {
 	@PostMapping
 	public ResponseEntity<List<MaintenanceTicket>> addTicket(@RequestBody MaintenanceTicket t) {
 		ts.addTicket(t);
+		System.out.println(t);
 		return ResponseEntity.status(HttpStatus.OK).body(ts.getAll());
 	}
 	
