@@ -44,23 +44,23 @@ public class LeaseController {
 				return lServices.findAll();
 			}
 			
-			@GetMapping("/{blank}")
-			public ResponseEntity<Lease> getBlankLease(@PathVariable("blank") int id) {
-				Lease r = lServices.getBlankLease(id);
-				if(r==null) {
-					return ResponseEntity.status(HttpStatus.SC_NO_CONTENT).build(); 
-				}
-				return ResponseEntity.status(HttpStatus.SC_ACCEPTED).body(r);
-			}
+//			@GetMapping("/{blank}")
+//			public ResponseEntity<Lease> getBlankLease(@PathVariable("blank") int id) {
+//				Lease r = lServices.getBlankLease(id);
+//				if(r==null) {
+//					return ResponseEntity.status(HttpStatus.SC_NO_CONTENT).build(); 
+//				}
+//				return ResponseEntity.status(HttpStatus.SC_ACCEPTED).body(r);
+//			}
 			
-			@GetMapping("/{id}") 
-			public ResponseEntity<Lease> findLeaseByTenant(@PathVariable("id") int id) {
-				Lease a = lServices.findLeaseByTenant(id);
-				if(a==null) {
-					return ResponseEntity.status(HttpStatus.SC_NO_CONTENT).build(); 
-				}
-				return ResponseEntity.status(HttpStatus.SC_ACCEPTED).body(a);
-			}
+//			@GetMapping("/{id}") 
+//			public ResponseEntity<Lease> findLeaseByTenant(@PathVariable("id") int id) {
+//				Lease a = lServices.findLeaseByTenant(id);
+//				if(a==null) {
+//					return ResponseEntity.status(HttpStatus.SC_NO_CONTENT).build(); 
+//				}
+//				return ResponseEntity.status(HttpStatus.SC_ACCEPTED).body(a);
+//			}
 			
 			
 			

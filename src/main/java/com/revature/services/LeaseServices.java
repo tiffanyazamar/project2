@@ -23,9 +23,9 @@ public class LeaseServices {
 
 
 
-	public Lease findLeaseByTenant(int id) {
-		return lDAO.findByUser(id);
-	}
+//	public Lease findLeaseByTenant(int id) {
+//		return lDAO.findByUser(id);
+//	}
 
 	public List<Lease> findAll() {
 		return lDAO.findAll();
@@ -40,9 +40,9 @@ public class LeaseServices {
 
 
 
-	public Lease getBlankLease(int id) {
-		return lDAO.BlankLeaseName(id);
-	}
+//	public Lease getBlankLease(int id) {
+//		return lDAO.BlankLeaseName(id);
+//	}
 
 
 

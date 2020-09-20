@@ -31,8 +31,12 @@ public class EventServices {
 		return edao.findByEventDate(date);
 	}
 	
-	public List<Event> findByUser(int userId) {
+	public List<Event> findByCreator(int userId) {
 		return edao.findByEventCreator(userId);
+	}
+	
+	public List<Event> findByGuest(int id) {
+		return edao.findByUserList_userID(id);
 	}
 	
 //	public List<Event> findUpcoming(Date date) {
@@ -51,4 +55,6 @@ public class EventServices {
 	public Event updateEvent(Event ev) {
 		return edao.save(ev);
 	}
+
+
 }

@@ -48,8 +48,8 @@ public class User implements Serializable{
 	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinColumn(name="user_role_id", nullable=false)
 	private Role userRole;
-//	@ManyToMany(mappedBy="userList")
-//	private List<Event> eventList = new ArrayList<Event>();
+	@ManyToMany(mappedBy="userList", fetch=FetchType.EAGER)
+	private List<Event> eventList;
 //	@OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
 //	@JsonManagedReference(value="user")//prevents infinite loops in my json
 //	private List<MaintenanceTicket> tickets;
@@ -72,7 +72,6 @@ public class User implements Serializable{
 
 
 
-<<<<<<< HEAD
 	public User(int userID, String username, String password, String firstName, String lastName, String phoneNumber,
 			Role userRole, Blob signedLease, List<Event> eventList, List<MaintenanceTicket> tickets, List<Lease> leases) {
 		super();
@@ -83,12 +82,11 @@ public class User implements Serializable{
 		this.lastName = lastName;
 		this.phoneNumber = phoneNumber;
 		this.userRole = userRole;
-		this.tickets = tickets;
-		this.leases = leases;
-		this.eventList = eventList;
+//		this.tickets = tickets;
+//		this.leases = leases;
+//		this.eventList = eventList;
 	}
-=======
->>>>>>> origin/master
+
 
 	public User(int userID, String username, String password, String firstName, String lastName, String phoneNumber,
 		Role userRole) {
@@ -108,23 +106,14 @@ public class User implements Serializable{
 		this.password = password;
 	}
 
-<<<<<<< HEAD
-	public List<Lease> getLeases() {
-		return leases;
-	}
-
-	public void setLeases(List<Lease> leases) {
-		this.leases = leases;
-	}
-
-	public List<MaintenanceTicket> getTickets() {
-		return tickets;
-	}
-
-	public void setTickets(List<MaintenanceTicket> tickets) {
-		this.tickets = tickets;
-	}
-=======
+//	public List<Lease> getLeases() {
+//		return leases;
+//	}
+//
+//	public void setLeases(List<Lease> leases) {
+//		this.leases = leases;
+//	}
+//
 //	public List<MaintenanceTicket> getTickets() {
 //		return tickets;
 //	}
@@ -132,7 +121,15 @@ public class User implements Serializable{
 //	public void setTickets(List<MaintenanceTicket> tickets) {
 //		this.tickets = tickets;
 //	}
->>>>>>> origin/master
+
+//	public List<MaintenanceTicket> getTickets() {
+//		return tickets;
+//	}
+//
+//	public void setTickets(List<MaintenanceTicket> tickets) {
+//		this.tickets = tickets;
+//	}
+
 
 	public int getUserID() {
 		return userID;

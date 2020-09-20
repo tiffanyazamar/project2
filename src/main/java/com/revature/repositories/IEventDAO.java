@@ -18,6 +18,8 @@ public interface IEventDAO  extends JpaRepository<Event, Integer> {
 
 
 	List<Event> findByEventCreator(int id);
+	List<Event> findByUserList_userID(int id);
+		
 	
 }
 	
