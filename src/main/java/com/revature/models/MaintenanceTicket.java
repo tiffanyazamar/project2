@@ -38,7 +38,7 @@ public class MaintenanceTicket implements Serializable {
 	@JoinColumn(name="user_id", nullable=false)
 	@JsonBackReference
 	private User author;
-	@ManyToOne(fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinColumn(name="status_id", nullable=false)
 	@JsonBackReference
 	private TicketStatus statusId;

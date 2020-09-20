@@ -12,10 +12,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Component
 @Entity
@@ -31,9 +34,8 @@ public class Lease implements Serializable {
 	@Column(name="lease_id", nullable=false)
 	private int leaseID;
 	@Column(name="lease")
-	private Blob leaseName;
-	@Column(name="blank_lease")
-	private Blob blankLeaseName;
+	@Lob
+	private Blob leaseBlob;
 	@Column(name="start_date")
 	private Timestamp startDate;
 	@Column(name="end_date")
@@ -42,6 +44,7 @@ public class Lease implements Serializable {
 	private boolean landlordSig;
 	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinColumn(name="user_id", nullable=false)
+	@JsonBackReference
 	private User user;
 	
 
@@ -49,10 +52,10 @@ public class Lease implements Serializable {
 	}
 
 
-	public Lease(int leaseID, Blob leaseName, Timestamp startDate, Timestamp endDate, boolean landlordSig, User user) {
+	public Lease(int leaseID, Blob leaseBlob, Timestamp startDate, Timestamp endDate, boolean landlordSig, User user) {
 		super();
 		this.leaseID = leaseID;
-		this.leaseName = leaseName;
+		this.leaseBlob = leaseBlob;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.landlordSig = landlordSig;
@@ -71,12 +74,12 @@ public class Lease implements Serializable {
 
 
 	public Blob getLeaseName() {
-		return leaseName;
+		return leaseBlob;
 	}
 
 
-	public void setLeaseName(Blob leaseName) {
-		this.leaseName = leaseName;
+	public void setLeaseName(Blob leaseBlob) {
+		this.leaseBlob = leaseBlob;
 	}
 
 
@@ -127,7 +130,7 @@ public class Lease implements Serializable {
 		result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
 		result = prime * result + (landlordSig ? 1231 : 1237);
 		result = prime * result + leaseID;
-		result = prime * result + ((leaseName == null) ? 0 : leaseName.hashCode());
+		result = prime * result + ((leaseBlob == null) ? 0 : leaseBlob.hashCode());
 		result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
@@ -152,10 +155,10 @@ public class Lease implements Serializable {
 			return false;
 		if (leaseID != other.leaseID)
 			return false;
-		if (leaseName == null) {
-			if (other.leaseName != null)
+		if (leaseBlob == null) {
+			if (other.leaseBlob != null)
 				return false;
-		} else if (!leaseName.equals(other.leaseName))
+		} else if (!leaseBlob.equals(other.leaseBlob))
 			return false;
 		if (startDate == null) {
 			if (other.startDate != null)
@@ -173,7 +176,7 @@ public class Lease implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Lease [leaseID=" + leaseID + ", leaseName=" + leaseName + ", startDate=" + startDate + ", endDate="
+		return "Lease [leaseID=" + leaseID + ", leaseBlob=" + leaseBlob + ", startDate=" + startDate + ", endDate="
 				+ endDate + ", landlordSig=" + landlordSig + ", user=" + user + "]";
 	}
 	

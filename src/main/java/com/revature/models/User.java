@@ -49,9 +49,12 @@ public class User implements Serializable{
 	private Role userRole;
 	@ManyToMany(mappedBy="userList")
 	private List<Event> eventList = new ArrayList<Event>();
-	@OneToMany(mappedBy = "author", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "author", fetch = FetchType.LAZY)
 	@JsonManagedReference //prevents infinite loops in my json
 	private List<MaintenanceTicket> tickets;
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+	@JsonManagedReference
+	private List<Lease> leases;
 	
 	public User() {
 		super();
@@ -72,7 +75,7 @@ public class User implements Serializable{
 
 
 	public User(int userID, String username, String password, String firstName, String lastName, String phoneNumber,
-			Role userRole, Blob signedLease, List<Event> eventList, List<MaintenanceTicket> tickets) {
+			Role userRole, Blob signedLease, List<Event> eventList, List<MaintenanceTicket> tickets, List<Lease> leases) {
 		super();
 		this.userID = userID;
 		this.username = username;
@@ -82,8 +85,8 @@ public class User implements Serializable{
 		this.phoneNumber = phoneNumber;
 		this.userRole = userRole;
 		this.tickets = tickets;
-
-//		this.eventList = eventList;
+		this.leases = leases;
+		this.eventList = eventList;
 	}
 
 	public User(String username, String password, String firstName, String lastName, String phoneNumber, Role userRole, List<Event> eventList, List<MaintenanceTicket> tickets) {
@@ -102,6 +105,14 @@ public class User implements Serializable{
 		super();
 		this.username = username;
 		this.password = password;
+	}
+
+	public List<Lease> getLeases() {
+		return leases;
+	}
+
+	public void setLeases(List<Lease> leases) {
+		this.leases = leases;
 	}
 
 	public List<MaintenanceTicket> getTickets() {
