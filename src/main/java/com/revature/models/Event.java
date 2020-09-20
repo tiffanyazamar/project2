@@ -37,10 +37,10 @@ public class Event implements Serializable{
 	private String eventDescription;
 	@Column(name="event_date", nullable=false)
 	private Date eventDate;
-	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="user_id", nullable=false)
 	private User eventCreator;
-	@ManyToMany(cascade = { CascadeType.ALL })
+	@ManyToMany
 	@JoinTable(
 			  name = "event_user", 
 			  joinColumns = @JoinColumn(name = "event_id"), 
