@@ -29,17 +29,9 @@ public class TicketStatus implements Serializable {
 	private int statusId;
 	@Column (nullable=false)
 	private String status;
-	@OneToMany(mappedBy = "statusId", fetch = FetchType.EAGER)
-	@JsonManagedReference //prevents infinite loops in my json
-	private List<MaintenanceTicket> tickets;
 	
 	
-	public TicketStatus(int statusId, String status, List<MaintenanceTicket> tickets) {
-		super();
-		this.statusId = statusId;
-		this.status = status;
-		this.tickets = tickets;
-	}
+	
 	public TicketStatus(int statusId, String status) {
 		super();
 		this.statusId = statusId;

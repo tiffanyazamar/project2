@@ -38,11 +38,12 @@ public class MaintenanceTicket implements Serializable {
 	private Timestamp resolved;
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="user_id", nullable=false)
-	@JsonBackReference(value="user")
+	//@JsonBackReference(value="user")
 	private User author;
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="status_id", nullable=false)
-	@JsonBackReference
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
+	//@JsonBackReference(value="status")
 	private TicketStatus statusId;
 	
 	public MaintenanceTicket() {
@@ -176,7 +177,7 @@ public class MaintenanceTicket implements Serializable {
 	@Override
 	public String toString() {
 		return "MaintenanceTicket [ticketId=" + ticketId + ", description=" + description + ", submitted=" + submitted
-				+ ", resolved=" + resolved + ", author=" + author.getUserID() + ", statusId=" + statusId.getStatusId() + "]";
+				+ ", resolved=" + resolved + ", author=" + author + ", statusId=" + statusId + "]";
 	}
 
 	
