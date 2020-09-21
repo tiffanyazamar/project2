@@ -61,7 +61,7 @@ public class TicketController {
 		
 	}
 	
-	//do we need to add a controller that looks for tickets by author AND statusID?
+
 	
 	@PostMapping
 	public ResponseEntity<List<MaintenanceTicket>> addTicket(@RequestBody MaintenanceTicket t) {

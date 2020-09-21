@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.revature.models.LoginDTO;
+import com.revature.models.MaintenanceTicket;
 import com.revature.models.Role;
 import com.revature.models.User;
 import com.revature.models.UserDTO;
@@ -60,18 +62,21 @@ public class UserController {
 		return uServices.findAll();
 	}
 
-	@GetMapping("/{id}") // Get mapping will direct GET requests to the given mapping. It avoids having
+	@GetMapping("id/{id}") // Get mapping will direct GET requests to the given mapping. It avoids having
 							// to use the method paramater
 	public ResponseEntity<User> findById(@PathVariable("id") int id) { // @PathVariable allows you to get the Path
 																		// Parameter out of the URI
-		User a = uServices.findById(id);
-		if (a == null) {
-			return ResponseEntity.status(HttpStatus.SC_NO_CONTENT).build(); // sends back an empty body in the response.
+		Optional<User> a = uServices.findById(id);
+		if(a.isPresent()) {
+			User u = a.get();
+			return ResponseEntity.status(HttpStatus.SC_ACCEPTED).body(u);
+		} else {
+			return ResponseEntity.status(HttpStatus.SC_NO_CONTENT).build();
 		}
-		return ResponseEntity.status(HttpStatus.SC_ACCEPTED).body(a);
+
 	}
 
-	@GetMapping("/{role}") // Get mapping will direct GET requests to the given mapping. It avoids having
+	@GetMapping("roleid/{role}") // Get mapping will direct GET requests to the given mapping. It avoids having
 							// to use the method paramater
 	public ResponseEntity<Role> findUserRole(@PathVariable("role") int id) { // @PathVariable allows you to get the Path
 																				// Parameter out of the URI

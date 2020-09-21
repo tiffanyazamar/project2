@@ -2,6 +2,7 @@ package com.revature.services;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,8 +48,8 @@ public class UserServices {
 //		return userDAO.findByUsernameAndPassword(username, password);
 //		
 //	}
-	public User findById(int id) {
-		return userDAO.findByUserID(id);
+	public Optional<User> findById(int id) {
+		return userDAO.findById(id);
 		
 	}
 	public List<User> findAll(){

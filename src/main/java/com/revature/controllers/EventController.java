@@ -26,7 +26,7 @@ import com.revature.services.EventServices;
 
 
 @RestController
-@RequestMapping(value = "/Event")
+@RequestMapping(value = "/event")
 @ResponseBody
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class EventController {
@@ -45,7 +45,7 @@ public class EventController {
 		return es.findAll();
 	}
 
-	@GetMapping("/{date}")
+	@GetMapping("date/{date}")
 	public ResponseEntity<List<Event>> findByDate(@PathVariable("date") Date date) {
 		List<Event> a = es.findByDate(date);
 		if (a == null) {
@@ -54,9 +54,18 @@ public class EventController {
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(a);
 	}
 	
-	@GetMapping("/{userId}")
-	public ResponseEntity<List<Event>> findByUser(@PathVariable("userId") int id) {
-		List<Event> events = es.findByUser(id);
+	@GetMapping("creator/{userId}")
+	public ResponseEntity<List<Event>> findByCreator(@PathVariable("userId") int id) {
+		List<Event> events = es.findByCreator(id);
+		if (events == null) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		}
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(events);
+	}
+	
+	@GetMapping("guest/{userId}")
+	public ResponseEntity<List<Event>> findByGuest(@PathVariable("userId") int id) {
+		List<Event> events = es.findByGuest(id);
 		if (events == null) {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		}
@@ -82,14 +91,15 @@ public class EventController {
 //	}
 //	
 	@PostMapping
-	public List<Event> addEvent(@RequestBody Event ev) {
+	public ResponseEntity<List<Event>> addEvent(@RequestBody Event ev) {
 		es.addEvent(ev);
-		return es.findAll();
+		return ResponseEntity.status(HttpStatus.OK).body(es.findAll());
 	}
 	
-	@PutMapping("/update")
-	public Event updateEvent(@RequestBody Event ev) {
-		return es.updateEvent(ev);
+	@PutMapping
+	public ResponseEntity<List<Event>> updateEvent(@RequestBody Event ev) {
+		 es.updateEvent(ev);
+		 return ResponseEntity.status(HttpStatus.OK).body(es.findAll());
 	}
 	
 }
