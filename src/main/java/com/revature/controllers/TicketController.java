@@ -49,7 +49,7 @@ public class TicketController {
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(a);
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/id")
 	public ResponseEntity<MaintenanceTicket> findById(@PathVariable("id") int id) {
 		Optional<MaintenanceTicket> t = ts.findById(id);
 		if(t.isPresent()) {

@@ -20,12 +20,15 @@ public class UserServices {
 	
 //	@Autowired
 	private RoleService roleService;
+	
+	private LeaseServices leaseService;
 //	
 	@Autowired
-	public UserServices(IUserDAO userDAO, RoleService roleService) {
+	public UserServices(IUserDAO userDAO, RoleService roleService, LeaseServices leaseService) {
 		super();
 		this.userDAO = userDAO;
 		this.roleService = roleService;
+		this.leaseService = leaseService;
 	}
 	
 	
@@ -70,14 +73,27 @@ public class UserServices {
 
 
 	public User login(String username, String password) {
-		return userDAO.findUserByUsernameAndPassword(username, password);
+		String hashedPassword = "";
+		try {
+			hashedPassword = Hash.generateHash(password, "MD5");
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		return userDAO.findUserByUsernameAndPassword(username.toLowerCase(), hashedPassword);
 	}
 
 
 	public User addUser(UserDTO p) {
+		String password = "";
+		try {
+			password = Hash.generateHash(p.password, "MD5");
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
 		Role userRole = roleService.findByName("Tenant");
-		User user = new User(p.username, p.password, p.firstName, p.lastName, p.phoneNumber, userRole);
+		User user = new User(p.username.toLowerCase(), password, p.firstName, p.lastName, p.phoneNumber, userRole);
 		userDAO.save(user);
+		leaseService.newLease(user);
 		return user;
 	}
 	

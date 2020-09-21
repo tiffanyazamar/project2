@@ -30,16 +30,18 @@ public class Lease implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="lease_id", nullable=false)
 	private int leaseID;
-	@Column(name="lease")
-	private Blob leaseName;
-	@Column(name="blank_lease")
-	private Blob blankLeaseName;
 	@Column(name="start_date")
 	private Timestamp startDate;
 	@Column(name="end_date")
 	private Timestamp endDate;
 	@Column(name="landlord_sig")
 	private boolean landlordSig;
+	@Column(name="tenant_sig")
+	private boolean tenantSig;
+	@Column(name="landlord_sig_date")
+	private Timestamp landlordSigDate;
+	@Column(name="tenant_sig_date")
+	private Timestamp tenantSigDate;
 	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	@JoinColumn(name="user_id", nullable=false)
 	private User user;
@@ -49,13 +51,15 @@ public class Lease implements Serializable {
 	}
 
 
-	public Lease(int leaseID, Blob leaseName, Timestamp startDate, Timestamp endDate, boolean landlordSig, User user) {
+	public Lease(Timestamp startDate, Timestamp endDate, boolean landlordSig, boolean tenantSig,
+			Timestamp landlordSigDate, Timestamp tenantSigDate, User user) {
 		super();
-		this.leaseID = leaseID;
-		this.leaseName = leaseName;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.landlordSig = landlordSig;
+		this.tenantSig = tenantSig;
+		this.landlordSigDate = landlordSigDate;
+		this.tenantSigDate = tenantSigDate;
 		this.user = user;
 	}
 
@@ -67,16 +71,6 @@ public class Lease implements Serializable {
 
 	public void setLeaseID(int leaseID) {
 		this.leaseID = leaseID;
-	}
-
-
-	public Blob getLeaseName() {
-		return leaseName;
-	}
-
-
-	public void setLeaseName(Blob leaseName) {
-		this.leaseName = leaseName;
 	}
 
 
@@ -110,6 +104,36 @@ public class Lease implements Serializable {
 	}
 
 
+	public boolean isTenantSig() {
+		return tenantSig;
+	}
+
+
+	public void setTenantSig(boolean tenantSig) {
+		this.tenantSig = tenantSig;
+	}
+
+
+	public Timestamp getLandlordSigDate() {
+		return landlordSigDate;
+	}
+
+
+	public void setLandlordSigDate(Timestamp landlordSigDate) {
+		this.landlordSigDate = landlordSigDate;
+	}
+
+
+	public Timestamp getTenantSigDate() {
+		return tenantSigDate;
+	}
+
+
+	public void setTenantSigDate(Timestamp tenantSigDate) {
+		this.tenantSigDate = tenantSigDate;
+	}
+
+
 	public User getUser() {
 		return user;
 	}
@@ -126,9 +150,11 @@ public class Lease implements Serializable {
 		int result = 1;
 		result = prime * result + ((endDate == null) ? 0 : endDate.hashCode());
 		result = prime * result + (landlordSig ? 1231 : 1237);
+		result = prime * result + ((landlordSigDate == null) ? 0 : landlordSigDate.hashCode());
 		result = prime * result + leaseID;
-		result = prime * result + ((leaseName == null) ? 0 : leaseName.hashCode());
 		result = prime * result + ((startDate == null) ? 0 : startDate.hashCode());
+		result = prime * result + (tenantSig ? 1231 : 1237);
+		result = prime * result + ((tenantSigDate == null) ? 0 : tenantSigDate.hashCode());
 		result = prime * result + ((user == null) ? 0 : user.hashCode());
 		return result;
 	}
@@ -150,17 +176,24 @@ public class Lease implements Serializable {
 			return false;
 		if (landlordSig != other.landlordSig)
 			return false;
-		if (leaseID != other.leaseID)
-			return false;
-		if (leaseName == null) {
-			if (other.leaseName != null)
+		if (landlordSigDate == null) {
+			if (other.landlordSigDate != null)
 				return false;
-		} else if (!leaseName.equals(other.leaseName))
+		} else if (!landlordSigDate.equals(other.landlordSigDate))
+			return false;
+		if (leaseID != other.leaseID)
 			return false;
 		if (startDate == null) {
 			if (other.startDate != null)
 				return false;
 		} else if (!startDate.equals(other.startDate))
+			return false;
+		if (tenantSig != other.tenantSig)
+			return false;
+		if (tenantSigDate == null) {
+			if (other.tenantSigDate != null)
+				return false;
+		} else if (!tenantSigDate.equals(other.tenantSigDate))
 			return false;
 		if (user == null) {
 			if (other.user != null)
@@ -173,9 +206,10 @@ public class Lease implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Lease [leaseID=" + leaseID + ", leaseName=" + leaseName + ", startDate=" + startDate + ", endDate="
-				+ endDate + ", landlordSig=" + landlordSig + ", user=" + user + "]";
+		return "Lease [leaseID=" + leaseID + ", startDate=" + startDate + ", endDate=" + endDate + ", landlordSig="
+				+ landlordSig + ", tenantSig=" + tenantSig + ", landlordSigDate=" + landlordSigDate + ", tenantSigDate="
+				+ tenantSigDate + ", user=" + user + "]";
 	}
-	
+
 
 }

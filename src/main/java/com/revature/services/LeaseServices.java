@@ -1,5 +1,8 @@
 package com.revature.services;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +12,8 @@ import org.springframework.stereotype.Service;
 import com.revature.repositories.ILeaseDAO;
 
 import com.revature.models.Lease;
+import com.revature.models.LeaseDTO;
+import com.revature.models.User;
 
 @Service
 public class LeaseServices {
@@ -24,7 +29,7 @@ public class LeaseServices {
 
 
 	public Lease findLeaseByTenant(int id) {
-		return lDAO.findByUser(id);
+		return lDAO.findByUserUserID(id);
 	}
 
 	public List<Lease> findAll() {
@@ -33,16 +38,44 @@ public class LeaseServices {
 
 
 
-	public Lease updateLease(Lease l) {
-	 return lDAO.save(l);
+	public Lease updateLease(LeaseDTO l) {
+		Lease lease = findById(l.leaseID);
+		Calendar endDate = Calendar.getInstance();
+		endDate.add(Calendar.YEAR, 1);
+		Timestamp timestamp = new Timestamp(new Date().getTime());
+		if(l.party.equals("tenant")) {
+			lease.setLandlordSig(false);
+			lease.setLandlordSigDate(null);		
+			lease.setStartDate(timestamp);
+			lease.setTenantSigDate(timestamp);
+			lease.setEndDate(new Timestamp(endDate.getTimeInMillis()));
+		}else if(l.party.equals("landlord")){
+			lease.setLandlordSig(true);
+			lease.setLandlordSigDate(new Timestamp(new Date().getTime()));
+		}
+		
+	 return lDAO.save(lease);
 	}
 
 
 
-
-	public Lease getBlankLease(int id) {
-		return lDAO.BlankLeaseName(id);
+	public Lease findById(int leaseID) {
+		return lDAO.findByLeaseID(leaseID);
 	}
+
+
+
+	public Lease newLease(User tenant) {
+		Timestamp today = new Timestamp(new Date().getTime());
+		Calendar endDate =Calendar.getInstance();
+		endDate.add(Calendar.YEAR, 1);
+		Lease lease = new Lease(today, new Timestamp(endDate.getTimeInMillis()), false, true, null, today, tenant);
+		return lDAO.save(lease);
+	}
+
+//	public Lease getBlankLease(int id) {
+//		return lDAO.BlankLeaseName(id);
+//	}
 
 
 
