@@ -21,12 +21,13 @@ import javax.persistence.Table;
 
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Component
 @Entity
 @Table(name="users")
-//@JsonIgnoreProperties("tickets")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"}) 
 public class User implements Serializable{
 
 	private static final long serialVersionUID = 1L;
