@@ -32,8 +32,15 @@ public class LeaseServices {
 		return lDAO.findByUserUserID(id);
 	}
 
-	public List<Lease> findAll() {
-		return lDAO.findAll();
+	public List<Lease> findAll(String status) {
+		if(status.equals("all")){
+			return lDAO.findAllByOrderByTenantSigDateDesc();
+		}else if(status.equals("signed")) {
+			
+			return lDAO.findByLandlordSigOrderByTenantSigDateDesc(true);
+		}else {
+			return lDAO.findByLandlordSigOrderByTenantSigDateDesc(false);
+		}
 	}
 
 
