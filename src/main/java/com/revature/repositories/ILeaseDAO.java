@@ -8,8 +8,10 @@ import com.revature.models.Lease;
 
 public interface ILeaseDAO  extends JpaRepository<Lease, Integer> {
 
+	List<Lease> findAllByOrderByTenantSigDateDesc();
 	Lease findByUserUserID(int id);
 
 	Lease findByLeaseID(int id);
 
+	List<Lease> findByLandlordSigOrderByTenantSigDateDesc(boolean signed);
 }
