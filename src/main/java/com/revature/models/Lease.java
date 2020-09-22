@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -42,13 +43,41 @@ public class Lease implements Serializable {
 	private Timestamp landlordSigDate;
 	@Column(name="tenant_sig_date")
 	private Timestamp tenantSigDate;
+	
+	@Type(type = "org.hibernate.type.BinaryType")
+	@Column(name="lease_file")
+	private byte[] leaseFile;
+	
 	@ManyToOne(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	@JoinColumn(name="user_id", nullable=false)
+	@JoinColumn(name="user_id")
 	private User user;
 	
 
 	public Lease() {
 	}
+	
+
+
+	public Lease(byte[] leaseFile) {
+		super();
+		this.leaseFile = leaseFile;
+	}
+
+	
+
+	public Lease(Timestamp startDate, Timestamp endDate, boolean landlordSig, boolean tenantSig,
+			Timestamp landlordSigDate, Timestamp tenantSigDate, byte[] leaseFile, User user) {
+		super();
+		this.startDate = startDate;
+		this.endDate = endDate;
+		this.landlordSig = landlordSig;
+		this.tenantSig = tenantSig;
+		this.landlordSigDate = landlordSigDate;
+		this.tenantSigDate = tenantSigDate;
+		this.leaseFile = leaseFile;
+		this.user = user;
+	}
+
 
 
 	public Lease(Timestamp startDate, Timestamp endDate, boolean landlordSig, boolean tenantSig,
@@ -63,6 +92,14 @@ public class Lease implements Serializable {
 		this.user = user;
 	}
 
+
+	public byte[] getLeaseFile() {
+		return leaseFile;
+	}
+
+	public void setLeaseFile(byte[] leaseFile) {
+		this.leaseFile = leaseFile;
+	}
 
 	public int getLeaseID() {
 		return leaseID;

@@ -72,6 +72,10 @@ public class LeaseServices {
 		Lease lease = new Lease(today, new Timestamp(endDate.getTimeInMillis()), false, true, null, today, tenant);
 		return lDAO.save(lease);
 	}
+	
+	public Lease uploadLease(Lease l) {
+		return lDAO.save(l);
+	}
 
 //	public Lease getBlankLease(int id) {
 //		return lDAO.BlankLeaseName(id);
