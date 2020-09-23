@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttributes;
@@ -40,24 +41,39 @@ import com.revature.services.UserServices;
 public class UserController {
 
 	private UserServices uServices;
-	private HttpSession sesh;
+	private static HttpSession sesh;
+	public User u;
+	
+	
 
 	@Autowired
 	public UserController(UserServices uServices, HttpSession sesh) {
 		super();
 		this.uServices = uServices;
-		this.sesh = sesh;
+		UserController.sesh = sesh;
 	}
 
+	
+	public User getU() {
+		return u;
+	}
+
+
+	public void setU(User u) {
+		this.u = u;
+	}
+
+
 	@PostMapping("/login")
-	public @ResponseBody User login(@RequestBody LoginDTO loginDTO) {
-		User u = uServices.login(loginDTO.username, loginDTO.password);
+	public ResponseEntity<User> login(@RequestBody LoginDTO loginDTO) {
+		u = uServices.login(loginDTO.username, loginDTO.password);
 		if (u != null) {
 			sesh.setAttribute("user", u);
-			System.out.println("loggedin User: "+sesh.getAttribute("user"));
+			System.out.println("loggedin User: "+sesh.getAttribute("user") +"<3");
 			sesh.setAttribute("loggedin", true);
+			return ResponseEntity.status(HttpStatus.OK).body(u);
 		}
-		return u;
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 
 	}
 //	@PostMapping("/register")

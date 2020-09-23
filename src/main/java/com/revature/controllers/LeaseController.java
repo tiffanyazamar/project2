@@ -1,6 +1,8 @@
 package com.revature.controllers;
 
+import java.util.Iterator;
 import java.util.List;
+
 
 import javax.servlet.http.HttpSession;
 
@@ -18,14 +20,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.revature.models.Lease;
 import com.revature.models.LeaseDTO;
-import com.revature.models.Role;
+
 import com.revature.models.User;
-import com.revature.repositories.ILeaseDAO;
+
 import com.revature.services.LeaseServices;
 
 import io.jsonwebtoken.io.IOException;
@@ -37,13 +40,17 @@ import io.jsonwebtoken.io.IOException;
 public class LeaseController {
 
 	private LeaseServices lServices;
-	private HttpSession sess;
+	private HttpSession sesh;
+	private UserController uc;
+	
 
 	@Autowired
-	public LeaseController(LeaseServices lServices, HttpSession sess) {
+	public LeaseController(LeaseServices lServices, HttpSession sesh, UserController uc) {
 		super();
 		this.lServices = lServices;
-		this.sess = sess;
+		this.sesh = sesh;
+		this.uc = uc;
+
 	}
 
 	@GetMapping("allLeases/{status}")
@@ -75,8 +82,8 @@ public class LeaseController {
 		//MultipartFile f = l.file;
 		if (f != null) {
 			//Lease lease = new Lease();
-			System.out.println("session being passed:" + sess);
-			User u = (User) sess.getAttribute("user");
+			User u = uc.getU();
+			System.out.println("heyyy");
 
 			System.out.println("user: "+u);
 			Lease lease = lServices.findLeaseByTenant(u.getUserID());
