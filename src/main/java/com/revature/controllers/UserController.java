@@ -10,13 +10,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.http.HttpStatus;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.context.annotation.SessionScope;
 
 import com.revature.models.LoginDTO;
 import com.revature.models.MaintenanceTicket;
@@ -36,16 +40,24 @@ import com.revature.services.UserServices;
 public class UserController {
 
 	private UserServices uServices;
+	private HttpSession sesh;
 
 	@Autowired
-	public UserController(UserServices uServices) {
+	public UserController(UserServices uServices, HttpSession sesh) {
 		super();
 		this.uServices = uServices;
+		this.sesh = sesh;
 	}
 
 	@PostMapping("/login")
 	public @ResponseBody User login(@RequestBody LoginDTO loginDTO) {
-		return uServices.login(loginDTO.username, loginDTO.password);
+		User u = uServices.login(loginDTO.username, loginDTO.password);
+		if (u != null) {
+			sesh.setAttribute("user", u);
+			System.out.println("loggedin User: "+sesh.getAttribute("user"));
+			sesh.setAttribute("loggedin", true);
+		}
+		return u;
 
 	}
 //	@PostMapping("/register")
@@ -69,9 +81,9 @@ public class UserController {
 		Optional<User> a = uServices.findById(id);
 		if(a.isPresent()) {
 			User u = a.get();
-			return ResponseEntity.status(HttpStatus.SC_ACCEPTED).body(u);
+			return ResponseEntity.status(HttpStatus.OK).body(u);
 		} else {
-			return ResponseEntity.status(HttpStatus.SC_NO_CONTENT).build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 
 	}
@@ -82,9 +94,9 @@ public class UserController {
 																				// Parameter out of the URI
 		Role r = uServices.findUserRole(id);
 		if (r == null) {
-			return ResponseEntity.status(HttpStatus.SC_NO_CONTENT).build(); // sends back an empty body in the response.
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // sends back an empty body in the response.
 		}
-		return ResponseEntity.status(HttpStatus.SC_ACCEPTED).body(r);
+		return ResponseEntity.status(HttpStatus.OK).body(r);
 	}
 
 	@PostMapping("/update")
@@ -92,18 +104,18 @@ public class UserController {
 																	// indicated object
 		p = uServices.updateUser(p);
 		if (p == null) {
-			return ResponseEntity.status(HttpStatus.SC_NO_CONTENT).build(); // sends back an empty body in the response.
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // sends back an empty body in the response.
 		}
-		return ResponseEntity.status(HttpStatus.SC_ACCEPTED).body(p);
+		return ResponseEntity.status(HttpStatus.OK).body(p);
 	}
 
 	@PostMapping("register")
 	public ResponseEntity<User> addUser(@RequestBody UserDTO p) {
 		User temp = uServices.addUser(p);
 		if (temp == null) {
-			return ResponseEntity.status(HttpStatus.SC_NO_CONTENT).build(); // sends back an empty body in the response.
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); // sends back an empty body in the response.
 		}
-		return ResponseEntity.status(HttpStatus.SC_ACCEPTED).body(temp);
+		return ResponseEntity.status(HttpStatus.OK).body(temp);
 	}
 
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.http.HttpStatus;
+import org.springframework.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.revature.models.Lease;
@@ -54,28 +55,36 @@ public class LeaseController {
 //	public ResponseEntity<Lease> getBlankLease(@PathVariable("blank") int id) {
 //		Lease r = lServices.getBlankLease(id);
 //		if (r == null) {
-//			return ResponseEntity.status(HttpStatus.SC_NO_CONTENT).build();
+//			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 //		}
-//		return ResponseEntity.status(HttpStatus.SC_ACCEPTED).body(r);
+//		return ResponseEntity.status(HttpStatus.OK).body(r);
 //	}
 
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<Lease> findLeaseByTenant(@PathVariable int id) {
 		Lease a = lServices.findLeaseByTenant(id);
 		if (a == null) {
-			return ResponseEntity.status(HttpStatus.SC_NO_CONTENT).build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
-		return ResponseEntity.status(HttpStatus.SC_ACCEPTED).body(a);
+		return ResponseEntity.status(HttpStatus.OK).body(a);
 	}
 	
-	@PostMapping("upload")
+	@RequestMapping(value=("/upload"),method=RequestMethod.POST)
 	public ResponseEntity<Boolean> uploadLease(@RequestParam("file") MultipartFile f) {
+		//System.out.println(l);
+		//MultipartFile f = l.file;
 		if (f != null) {
-			Lease lease = new Lease();
+			//Lease lease = new Lease();
+			System.out.println("session being passed:" + sess);
 			User u = (User) sess.getAttribute("user");
+
+			System.out.println("user: "+u);
+			Lease lease = lServices.findLeaseByTenant(u.getUserID());
+			System.out.println("lease"+lease);
+			
 			try {
 				lease.setLeaseFile(f.getBytes());
-				lease.setUser(u);
+				//lease.setUser(u);
 				//lease.setUser(new User("username", "password", "firstN", "lastN", "12332112344", new Role("SuperUser")));
 				//System.out.println("lease being added :" + lease);
 			} catch (IOException | java.io.IOException e) {
@@ -83,12 +92,12 @@ public class LeaseController {
 			}
 			
 			if (lServices.uploadLease(lease) == null) {
-				return ResponseEntity.status(HttpStatus.SC_NO_CONTENT).build();
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 			}
-			return ResponseEntity.status(HttpStatus.SC_ACCEPTED).body(true);
+			return ResponseEntity.status(HttpStatus.OK).body(true);
 		} else {
 			System.out.println("file is null");
-			return ResponseEntity.status(HttpStatus.SC_NO_CONTENT).build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 	}
 	
@@ -97,9 +106,9 @@ public class LeaseController {
 	public ResponseEntity<Boolean> updateLease(@RequestBody LeaseDTO l) {
 		Lease lease = lServices.updateLease(l);
 		if (lease == null) {
-			return ResponseEntity.status(HttpStatus.SC_NO_CONTENT).build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
-		return ResponseEntity.status(HttpStatus.SC_ACCEPTED).body(true);
+		return ResponseEntity.status(HttpStatus.OK).body(true);
 	}
 
 }
