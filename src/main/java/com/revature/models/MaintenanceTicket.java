@@ -180,6 +180,7 @@ public class MaintenanceTicket implements Serializable {
 				+ ", resolved=" + resolved + ", author=" + author + ", statusId=" + statusId + "]";
 	}
 
+
 	
 	
 	

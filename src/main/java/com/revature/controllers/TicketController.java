@@ -16,7 +16,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.models.Lease;
+import com.revature.models.LeaseDTO;
 import com.revature.models.MaintenanceTicket;
+import com.revature.models.TicketDTO;
+import com.revature.models.User;
 import com.revature.services.TicketServices;
 
 
@@ -40,25 +44,34 @@ public class TicketController {
 		return ts.getAll();
 	}
 
-	@GetMapping("/{statusID}")
-	public ResponseEntity<List<MaintenanceTicket>> findByStatusId(@PathVariable("statusID") int sId) {
-		List<MaintenanceTicket> a = ts.findByStatusId(sId);
+//	@GetMapping("/status")
+//	public ResponseEntity<List<MaintenanceTicket>> findByStatus(@PathVariable("status") String status) {
+//		List<MaintenanceTicket> a = ts.findByStatus(status);
+//		if (a == null) {
+//			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+//		}
+//		return ResponseEntity.status(HttpStatus.ACCEPTED).body(a);
+//	}
+//	
+//	@GetMapping("/id")
+//	public ResponseEntity<MaintenanceTicket> findById(@PathVariable("id") int id) {
+//		MaintenanceTicket t = ts.findById(id);
+//		if(t != null) {
+//			return ResponseEntity.status(HttpStatus.OK).body(t);
+//		} else {
+//			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+//		}
+//		
+//	}
+	
+	@GetMapping("{userId}")
+	public ResponseEntity<List<MaintenanceTicket>> findByAuthor1(@PathVariable("userId") int ID) {
+		System.out.println(ID);
+		List<MaintenanceTicket> a = ts.findByAuthor1(ID);
 		if (a == null) {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 		}
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(a);
-	}
-	
-	@GetMapping("/id")
-	public ResponseEntity<MaintenanceTicket> findById(@PathVariable("id") int id) {
-		Optional<MaintenanceTicket> t = ts.findById(id);
-		if(t.isPresent()) {
-			MaintenanceTicket mt = t.get();
-			return ResponseEntity.status(HttpStatus.OK).body(mt);
-		} else {
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-		}
-		
 	}
 	
 
@@ -68,6 +81,15 @@ public class TicketController {
 		ts.addTicket(t);
 		System.out.println(t);
 		return ResponseEntity.status(HttpStatus.OK).body(ts.getAll());
+	}
+	
+	@PostMapping("update")
+	public ResponseEntity<Boolean> updateTicket(@RequestBody TicketDTO l) {
+		MaintenanceTicket ticket = ts.updateTicket(l);
+		if((ticket) == null) {
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		}
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(true);
 	}
 	
 }

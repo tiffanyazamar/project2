@@ -1,8 +1,10 @@
 package com.revature.services;
 
 import java.sql.Timestamp;
+
+import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,6 +16,9 @@ import com.revature.repositories.ITicketDAO;
 import com.revature.repositories.ITicketStatusDAO;
 import com.revature.repositories.IUserDAO;
 import com.revature.models.MaintenanceTicket;
+import com.revature.models.TicketDTO;
+import com.revature.models.TicketStatus;
+import com.revature.models.User;
 
 @Service
 public class TicketServices {
@@ -21,11 +26,13 @@ public class TicketServices {
 
 	private ITicketDAO tdao;
 	private ITicketStatusDAO tsdao;
+	private IUserDAO udao;
 	@Autowired
-	public TicketServices(ITicketDAO tdao, ITicketStatusDAO tsdao) {
+	public TicketServices(ITicketDAO tdao, ITicketStatusDAO tsdao, IUserDAO udao) {
 		super();
 		this.tdao = tdao;
 		this.tsdao = tsdao;
+		this.udao = udao;
 	}
 	
 	public List<MaintenanceTicket> getAll() {
@@ -34,9 +41,10 @@ public class TicketServices {
 		return tdao.findAll();
 	}
 	
-	public List<MaintenanceTicket> findByStatusId(int sid) {
-		log.info("Finding Maintenance Ticket by Status ID");
-		return tdao.findByStatusId(sid);
+	public List<MaintenanceTicket> findByStatus(String status) {
+		log.info("Finding Maintenance Ticket by Status");
+		TicketStatus status1 = tsdao.findByStatus(status);
+		return tdao.findByTicketId(status1.getStatusId());
 	}
 	
 	@Transactional
@@ -47,8 +55,25 @@ public class TicketServices {
 		return tdao.save(t);
 	}
 
-	public Optional<MaintenanceTicket> findById(int id) {
+	public MaintenanceTicket findById(int id) {
 		log.info("Finding Maintenance Ticket by ID");
 		return tdao.findById(id);
 	}
+
+	public MaintenanceTicket updateTicket(TicketDTO l) {
+			log.info("Resolving Maintenance Ticket by ID");
+			MaintenanceTicket ticket = findById(l.ticketId);
+			Timestamp timestamp = new Timestamp(new Date().getTime());
+			ticket.setResolved(timestamp);
+			TicketStatus status = tsdao.findByStatusId(2);
+			ticket.setStatusId(status);
+		 return tdao.save(ticket);
+	}
+
+	public List<MaintenanceTicket> findByAuthor1(int ID) {
+		User u = udao.getOne(ID);
+		return tdao.findByAuthor(u);
+	}
+
+	
 }

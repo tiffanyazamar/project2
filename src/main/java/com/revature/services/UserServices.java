@@ -62,13 +62,13 @@ public class UserServices {
 //		return userDAO.save(user);
 //	}
 	public Role findUserRole(int id) {
-		return userDAO.userRole(id);
+		Role role = userDAO.userRole(id);
+		System.out.println("hiiii");
+		return role;
 		
 	}
 
 	public User updateUser(User p) {
-		
-		
 		return userDAO.save(p);
 	}
 
