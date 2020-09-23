@@ -37,9 +37,9 @@ public class LeaseController {
 		this.lServices = lServices;
 	}
 
-	@GetMapping("allLeases")
-	public List<Lease> getAllLease() {
-		return lServices.findAll();
+	@GetMapping("allLeases/{status}")
+	public List<Lease> getAllLease(@PathVariable("status") String status) {
+		return lServices.findAll(status);
 	}
 
 //	@GetMapping("/{blank}")
