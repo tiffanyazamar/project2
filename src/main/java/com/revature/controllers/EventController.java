@@ -45,23 +45,23 @@ public class EventController {
 		return es.findAll();
 	}
 
-	@GetMapping("date/{date}")
-	public ResponseEntity<List<Event>> findByDate(@PathVariable("date") Date date) {
-		List<Event> a = es.findByDate(date);
-		if (a == null) {
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-		}
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(a);
-	}
+//	@GetMapping("date/{date}")
+//	public ResponseEntity<List<Event>> findByDate(@PathVariable("date") Date date) {
+//		List<Event> a = es.findByDate(date);
+//		if (a == null) {
+//			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+//		}
+//		return ResponseEntity.status(HttpStatus.ACCEPTED).body(a);
+//	}
 	
-	@GetMapping("creator/{userId}")
-	public ResponseEntity<List<Event>> findByCreator(@PathVariable("userId") int id) {
-		List<Event> events = es.findByCreator(id);
-		if (events == null) {
-			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-		}
-		return ResponseEntity.status(HttpStatus.ACCEPTED).body(events);
-	}
+//	@GetMapping("creator/{userId}")
+//	public ResponseEntity<List<Event>> findByCreator(@PathVariable("userId") int id) {
+//		List<Event> events = es.findByCreator(id);
+//		if (events == null) {
+//			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+//		}
+//		return ResponseEntity.status(HttpStatus.ACCEPTED).body(events);
+//	}
 	
 	@GetMapping("guest/{userId}")
 	public ResponseEntity<List<Event>> findByGuest(@PathVariable("userId") int id) {

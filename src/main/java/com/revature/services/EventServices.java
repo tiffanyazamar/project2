@@ -27,13 +27,13 @@ public class EventServices {
 		return edao.findAll();
 	}
 	
-	public List<Event> findByDate(Date date) {
-		return edao.findByEventDate(date);
-	}
+//	public List<Event> findByDate(Date date) {
+//		return edao.findByEventDate(date);
+//	}
 	
-	public List<Event> findByCreator(int userId) {
-		return edao.findByEventCreator(userId);
-	}
+//	public List<Event> findByCreator(int userId) {
+//		return edao.findByEventCreator(userId);
+//	}
 	
 	public List<Event> findByGuest(int id) {
 		return edao.findByUserList_userID(id);
