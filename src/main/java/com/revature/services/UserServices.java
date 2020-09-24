@@ -62,8 +62,7 @@ public class UserServices {
 //		return userDAO.save(user);
 //	}
 	public Role findUserRole(int id) {
-		Role role = userDAO.userRole(id);
-		System.out.println("hiiii");
+		Role role = roleService.findById(id);
 		return role;
 		
 	}

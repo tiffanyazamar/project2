@@ -37,7 +37,6 @@ public class TicketServices {
 	
 	public List<MaintenanceTicket> getAll() {
 		log.info("Finding all Maintenance Tickets");
-		System.out.println("<3"  + tdao.findAll());
 		return tdao.findAll();
 	}
 	
@@ -71,6 +70,7 @@ public class TicketServices {
 	}
 
 	public List<MaintenanceTicket> findByAuthor1(int ID) {
+		log.info("Finding by author");
 		User u = udao.getOne(ID);
 		return tdao.findByAuthor(u);
 	}
