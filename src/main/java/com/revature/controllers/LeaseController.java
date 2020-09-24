@@ -31,7 +31,6 @@ import com.revature.models.User;
 
 import com.revature.services.LeaseServices;
 
-import io.jsonwebtoken.io.IOException;
 
 @RestController
 @RequestMapping(value = "/lease")
@@ -94,7 +93,7 @@ public class LeaseController {
 				//lease.setUser(u);
 				//lease.setUser(new User("username", "password", "firstN", "lastN", "12332112344", new Role("SuperUser")));
 				//System.out.println("lease being added :" + lease);
-			} catch (IOException | java.io.IOException e) {
+			} catch (Exception e) {
 				e.printStackTrace();
 			}
 			
