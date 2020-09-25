@@ -1209,3 +1209,33 @@ org.postgresql.util.PSQLException: ERROR: value too long for type character vary
 2020-09-24 21:48:06.240  INFO 51832 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
 2020-09-24 21:48:06.242  INFO 51832 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
 2020-09-24 21:48:06.270  INFO 51832 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2020-09-24 21:52:55.559  INFO 52452 --- [main] c.revature.ChatelaineSbApplicationTests  : Starting ChatelaineSbApplicationTests on DESKTOP-LM7TD9J with PID 52452 (started by lauvi in C:\Users\lauvi\Documents\Project2\Chatelaine2\project2)
+2020-09-24 21:52:55.562  INFO 52452 --- [main] c.revature.ChatelaineSbApplicationTests  : No active profile set, falling back to default profiles: default
+2020-09-24 21:52:56.915  INFO 52452 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2020-09-24 21:52:57.052  INFO 52452 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 124ms. Found 6 JPA repository interfaces.
+2020-09-24 21:52:57.945  INFO 52452 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-09-24 21:52:58.050  INFO 52452 --- [task-1] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2020-09-24 21:52:58.186  INFO 52452 --- [task-1] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.21.Final
+2020-09-24 21:52:58.243  WARN 52452 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2020-09-24 21:52:58.541  INFO 52452 --- [task-1] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2020-09-24 21:52:59.176  INFO 52452 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2020-09-24 21:53:01.305  INFO 52452 --- [task-1] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2020-09-24 21:53:01.364  INFO 52452 --- [task-1] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.PostgreSQL10Dialect
+2020-09-24 21:53:05.296  INFO 52452 --- [task-1] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2020-09-24 21:53:05.311  INFO 52452 --- [task-1] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2020-09-24 21:53:05.492  INFO 52452 --- [main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 14 endpoint(s) beneath base path '/actuator'
+2020-09-24 21:53:05.556  INFO 52452 --- [main] DeferredRepositoryInitializationListener : Triggering deferred initialization of Spring Data repositories…
+2020-09-24 21:53:06.274  INFO 52452 --- [main] DeferredRepositoryInitializationListener : Spring Data repositories initialized!
+2020-09-24 21:53:06.288  INFO 52452 --- [main] c.revature.ChatelaineSbApplicationTests  : Started ChatelaineSbApplicationTests in 11.241 seconds (JVM running for 13.515)
+2020-09-24 21:53:06.476  INFO 52452 --- [main] com.revature.services.TicketServices     : Finding Maintenance Ticket by ID
+2020-09-24 21:53:07.006  INFO 52452 --- [main] com.revature.services.TicketServices     : Resolving Maintenance Ticket by ID
+2020-09-24 21:53:07.006  INFO 52452 --- [main] com.revature.services.TicketServices     : Finding Maintenance Ticket by ID
+2020-09-24 21:53:10.596  INFO 52452 --- [main] com.revature.services.TicketServices     : Finding Maintenance Ticket by ID
+2020-09-24 21:53:11.688  INFO 52452 --- [main] com.revature.services.TicketServices     : Finding Maintenance Ticket by Status
+2020-09-24 21:53:12.081  INFO 52452 --- [main] com.revature.services.TicketServices     : Finding by author
+2020-09-24 21:53:12.397  INFO 52452 --- [main] com.revature.services.TicketServices     : Adding Maintenance Ticket
+2020-09-24 21:53:12.956  INFO 52452 --- [main] com.revature.services.TicketServices     : Finding all Maintenance Tickets
+2020-09-24 21:53:21.619  INFO 52452 --- [SpringContextShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2020-09-24 21:53:21.623  INFO 52452 --- [SpringContextShutdownHook] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2020-09-24 21:53:21.625  INFO 52452 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2020-09-24 21:53:21.638  INFO 52452 --- [SpringContextShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
