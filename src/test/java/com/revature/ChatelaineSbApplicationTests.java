@@ -222,7 +222,7 @@ class ChatelaineSbApplicationTests {
 	
 	@Test
 	void testEventService() {
-		List<Event> e = es.findByGuest(1);
+		List<Event> e = es.findByGuest(13);
 		assertThat(es.updateEvent(e.get(0))).isNotNull();
 		assertThat(es.addEvent(e.get(0))).isNotNull();
 		
